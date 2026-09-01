@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mnu.sawon.mapper.EmpMapper">
+
+	<!-- .1. emp 테이블이 존재한는 총 사원수 ㄱ카운트 -->
+	<select id="empCount" resultType="int">
+		select count(*) from emp
+	</select>
+	<!-- 2.부서번호가 xxdls사원수 -->
+	<select id="empDnoCount" resultType="int">
+		select count(*) from emp　where dno=#{dno}
+	</select>
+	<!-- 3. 전체목록 리스트나 dto면 반환타입은 dto 경로 적어주면 알아서 변환해준다-->
+	<select id="empList" resultType="com.mnu.sawon.domain.EmpDTO">
+		select * from emp order by eno desc
+	</select>
+
+	<!-- 4. 전체목록 리스트나 dto면 반환타입은 dto 경로 적어주면 알아서 변환해준다-->
+	<select id="empDnoList" resultType="com.mnu.sawon.domain.EmpDTO">
+		select * from emp where dno=#{dno} order by eno desc
+	</select>
+
+	<!-- 5. 전체목록 리스트나 dto면 반환타입은 dto 경로 적어주면 알아서 변환해준다-->
+	<select id="empEnoList" resultType="com.mnu.sawon.domain.EmpDTO">
+		select * from emp where eno=#{eno}
+	</select>
+	<!-- DEPT 테이블에 등록 -->
+	<insert id="deptWrite">
+		insert into dept(dno,dname,loc) values(#{dno},#{dname},#{loc})
+	</insert>
+	<!-- dept 테이블 업데이트 -->
+	<update id="deptUpdate">
+		update dept set dname=#{dname}, loc=#{loc} where dno=#{dno}
+	</update>
+	<!-- dept 삭제 -->
+	<delete id="deptDelete">
+		delete from dept where dno=#{dno}
+	</delete>
+</mapper>
+
