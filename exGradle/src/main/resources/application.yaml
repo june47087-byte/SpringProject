@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: exGradle
+  mvc:
+    view:
+      # jsp 경로 설정 
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+
