@@ -1,11 +1,27 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <html>
 <head><title>방명록 삭제</title>
  <link rel="stylesheet" type="text/css" href="/stylesheet.css">
+ <script>
+ 	function send(){
+ 		if(!board.pass.value){
+ 			alert("비밀번호를 입력해 주세요.");
+ 			board.pass.focus();
+ 			return;
+ 		}
+ 		board.submit();
+ 	}
+ </script>
  </head>
  <body>
- <form method="post" >
+   <c:if test="${row == 0}">
+   <script>alert("비밀번호가 틀렸습니다.");</script>
+   </c:if>
+   <form name="board" method="post" action="/Board/board_delete_pro">
+     <input type="hidden" name="idx" value="${board.idx }">
+     <input type="hidden" name="page" value="${page}">
    <table border="0" cellpadding="0" cellspacing="0" width="300" align="center">
      <tr>
        <td height="50">
@@ -18,8 +34,8 @@
        <td valign="middle" height="40">
        <font size="2" face="돋움">
        비밀번호 <input type="password" name="pass" size="8"></font>
-       <input type="submit" value="삭제">
-       <input type="button" value="닫기"></td></tr>
+       <input type="button" value="삭제" onclick="send()">
+       <input type="button" value="닫기" onclick="history.back()"></td></tr>
    </table>
    </form>
  </body>

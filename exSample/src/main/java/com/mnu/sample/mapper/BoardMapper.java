@@ -27,6 +27,7 @@ public interface BoardMapper {
 	public void boardHits(int idx); // 조회수
 	public BoardDTO boardViewModify(int idx); // 상세 뷰
 	// 7. 수정처리
-	
+	public int boardModifyPro(BoardDTO dto);
 	// 8. 삭제처리
+	public int boardDelete(BoardDTO dto);
 }

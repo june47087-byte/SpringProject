@@ -16,6 +16,9 @@ import com.mnu.sample.domain.BoardDTO;
 import com.mnu.sample.domain.PageSearchDTO;
 import com.mnu.sample.service.BoardService;
 import com.mnu.sample.util.PageIndex;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping("Board")
 public class BoardController {
@@ -135,10 +138,10 @@ public class BoardController {
 		String pageSkip = null;
 		if(pgDTO.getKey() != null) {
 			bList = boardService.boardListSearchPage(pgDTO);
-			pageSkip = PageIndex.pageListHan(nowpage, totpage, "/Board/board_list_page", maxlist, pgDTO.getSearch(), pgDTO.getKey());
+			pageSkip = PageIndex.pageListHan(nowpage, totpage, "/Board/board_list", maxlist, pgDTO.getSearch(), pgDTO.getKey());
 		}else {
 			bList = boardService.boardListPage(pgDTO);
-			pageSkip = PageIndex.pageList(nowpage, totpage, "/Board/board_list_page", maxlist);
+			pageSkip = PageIndex.pageList(nowpage, totpage, "/Board/board_list", maxlist);
 		}
 		
 		model.addAttribute("totcount", totcount);
@@ -149,8 +152,8 @@ public class BoardController {
 		return "Board/board_list";
 	}
 	@GetMapping("board_view")
-	public String boardview(@RequestParam(defaultValue = "1") int page, @RequestParam("idx") int idx, Model model) {
-		model.addAttribute("board", boardService.boardViewModify(idx));
+	public String boardview(@RequestParam(defaultValue = "1") int page, @RequestParam("idx") int idx, Model model,  HttpServletRequest request, HttpServletResponse response) {
+		model.addAttribute("board", boardService.boardViewModify(idx, request, response));
 		return "Board/board_view";
 	}
 	
@@ -163,8 +166,34 @@ public class BoardController {
 		boardService.boardWrite(dto);
 		return "redirect:/Board/board_list?page=" + page;
 	}
+	// modify
+	@GetMapping("board_modify")
+	public String moardModify(@RequestParam(defaultValue= "1") int page, @RequestParam("idx") int idx, Model model) {
+		model.addAttribute("board", boardService.boardModify(idx));
+		return "Board/board_modify";
+	}
+	@PostMapping("board_modify_pro")
+	public String boardModifyPro(@RequestParam(defaultValue= "1") int page, BoardDTO dto, Model model) {
+		int row = boardService.boardModifyPro(dto);
+		model.addAttribute("row", row);
+		model.addAttribute("idx", dto.getIdx());
+		model.addAttribute("page", page);
+		return "Board/board_modify_pro";
+	}
 	@GetMapping("board_delete")
-	public String boarddlete() {
+	public String boardDlete(@RequestParam(defaultValue= "1") int page, @RequestParam("idx") int idx, Model model) {
+		model.addAttribute("board", boardService.boardModify(idx));
+		model.addAttribute("page", page);
+		return "Board/board_delete";
+	}
+	@PostMapping("board_delete_pro")
+	public String boardDeletePro(@RequestParam(defaultValue= "1") int page, BoardDTO dto, Model model) {
+		int row = boardService.boardDelete(dto);
+		if (row == 1) {
+			return "redirect:/Board/board_list?page=" + page;
+		}
+		model.addAttribute("row", row);
+		model.addAttribute("page", page);
 		return "Board/board_delete";
 	}
 }

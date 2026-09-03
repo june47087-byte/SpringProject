@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
-<%@ include file="/Include/topmenu.jsp" %>
+<%@ include file="../Include/topmenu.jsp" %>
 
 <html>
    <head><title> 자료 올리기 </title>
@@ -13,7 +13,7 @@
    <td width="20%" height="500" bgcolor="#ecf1ef" valign="top">
 
 	<!--     다음에 추가할 로그인  -->
-	<jsp:include page="/Include/login_form.jsp" /> 
+	<jsp:include page="../Include/login_form.jsp" /> 
 
    </td>
    <td width="80%" valign="top">&nbsp;<br>
@@ -61,8 +61,8 @@
           <td align="right">&nbsp;</td>
           <td><font size="2">&nbsp;</font></td>
           <td align=center>
-			<img src="/Images/img/purple_save.gif" width="56" height="18" border="0">
-			<img src="/Images/img/purple_cancle.gif" width="56" height="18" border="0">
+			<img src="/Images/img/save.gif" width="56" height="18" border="0">
+			<img src="/Images/img/cancle.gif" width="56" height="18" border="0">
 
 		  </td>
         </tr>

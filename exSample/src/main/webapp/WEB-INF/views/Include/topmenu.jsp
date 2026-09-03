@@ -45,7 +45,7 @@
      <p align="center"><font color="white" size="2"><b><a href="/BoardPhoto/boardphoto_list" class="white">포토게시판</a></b></font></p>
      </td>
      <td bgcolor="#9966ff" width="10%" onmouseover="style.backgroundColor='#2772D3'" onmouseout="style.backgroundColor=''">
-     <p align="center"><font color="white" size="2"><b><a href="/Pds/pds_list" class="white">자료실</a></b></font></p>
+     <p align="center"><font color="white" size="2"><b><a href="/Pds/pds_list?page=1" class="white">자료실</a></b></font></p>
      </td>
      <td bgcolor="#9966ff" width="10%" onmouseover="style.backgroundColor='#2772D3'" onmouseout="style.backgroundColor=''">
      <p align="center"><font color="white" size="2"><b><a href="/Gallery/gallery_list" class="white">겔러리</a></b></font></p>

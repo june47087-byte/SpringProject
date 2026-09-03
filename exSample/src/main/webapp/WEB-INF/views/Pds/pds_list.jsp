@@ -91,7 +91,7 @@
 				</table>
 			</td>
 			<td width="25%" align="right">
-			<a href="#"><img src="/Images/img/write.gif" border="0"></a>
+			<a href="/Pds/pds_write?page=${page}"><img src="/Images/img/write.gif" border="0"></a>
 			</td>
 		</tr>
 	</table>

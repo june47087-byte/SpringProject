@@ -92,15 +92,18 @@
 	<select id="boardListSearch" resultType="com.mnu.sample.domain.BoardDTO">
 		select * from tbl_board where
 		<choose>
-			<when test="search=='name'">
+			<when test="search != null and key != null and search=='name'">
 				name like '%'||#{key}||'%'
 			</when>
-			<when test="search=='subject'">
+			<when test="search != null and key != null and search=='subject'">
 				subject like '%'||#{key}||'%'
 			</when>
-			<when test="search=='contents'">
+			<when test="search != null and key != null and search=='contents'">
 				contents like '%'||#{key}||'%'
 			</when>
+			<otherwise>
+				1=1
+			</otherwise>
 		</choose>
 		order by idx desc
 	</select>
@@ -136,6 +139,11 @@
 		select * from tbl_board where idx = #{idx}
 	</select>
 	<!-- 7. 수정처리-->
-	
+	<update id="boardModifyPro">
+		update tbl_board set email= #{email}, subject= #{subject}, contents= #{contents} where idx = #{idx} and pass= #{pass}
+	</update>
 	<!--  8. 삭제처리 -->
+	<delete id="boardDelete">
+		delete from tbl_board where idx = #{idx} and pass = #{pass}
+	</delete>
 </mapper>
