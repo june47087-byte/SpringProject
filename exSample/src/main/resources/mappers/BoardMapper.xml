@@ -63,6 +63,12 @@
 		select * from tbl_board order by idx desc
 	</select>
 	
+	<!-- 3-1. 전체목록 리스트(페이지 인덱싱) -->
+	<select id="boardListPage" resultType="com.mnu.sample.domain.BoardDTO">
+		select * from tbl_board order by idx desc 
+			offset #{offset} rows fetch next #{maxlist} rows only
+	</select>
+	
 	<!-- 4. 검색조건에 맞는 글 리스트 get, post -->
 	<!-- 
 	<select id="boardListSearch" resultType="com.mnu.sample.domain.BoardDTO">
@@ -97,13 +103,38 @@
 			</when>
 		</choose>
 		order by idx desc
+	</select>
+		
+	<!-- 4-1. 검색조건에 맞는 글 리스트(페이지 인덱싱) -->
+	<select id="boardListSearchPage" resultType="com.mnu.sample.domain.BoardDTO">
+			select * from tbl_board where 
+			<choose>
+				<when test="search=='name'">
+					name like '%'||#{key}||'%'
+				</when>
+				<when test="search=='subject'">
+					subject like '%'||#{key}||'%'
+				</when>
+				<when test="search=='contents'">
+					contents like '%'||#{key}||'%'
+				</when>
+			</choose>
+			order by idx desc offset #{offset} rows fetch next #{maxlist} rows only
 	</select>	
-	<!-- 5. 글 목록 -->
-	<!-- 6. 특정 글 검색(view, modify)-->
+	
+	<!-- 5. 글 등록 -->
 	<insert id="boardWrite">
 		insert into tbl_board(idx, name, email, subject, contents, pass)
 		values(tbl_board_seq_idx.nextval, #{name}, #{email}, #{subject}, #{contents}, #{pass})
 	</insert>
+
+	<!-- 6. 특정 글 검색(view, modify)-->
+	<update id="boardHits">
+		update tbl_board set readcnt = readcnt + 1 where idx = #{idx}
+	</update>
+	<select id="boardViewModify" resultType="com.mnu.sample.domain.BoardDTO">
+		select * from tbl_board where idx = #{idx}
+	</select>
 	<!-- 7. 수정처리-->
 	
 	<!--  8. 삭제처리 -->

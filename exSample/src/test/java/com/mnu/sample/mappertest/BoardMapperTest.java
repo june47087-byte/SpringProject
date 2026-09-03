@@ -1,5 +1,7 @@
 package com.mnu.sample.mappertest;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.mnu.sample.controller.AdminController;
+import com.mnu.sample.domain.PageSearchDTO;
 import com.mnu.sample.mapper.BoardMapper;
 
 @SpringBootTest
@@ -32,11 +35,33 @@ public class BoardMapperTest {
 		boardMapper.boardList().forEach(board->log.info(board.toString()));
 	}
 	*/
+	/*
 	@Test
 	public void boardListSearchTest() {
 		String search = "name";
 		String key = "김";
 		boardMapper.boardListSearch(search, key).forEach(board->log.info(board.toString()));
+	}
+	*/
+	/*
+	@Test
+	public void boardListPageTest() {
+		PageSearchDTO dto = new PageSearchDTO();
+		dto.setOffset(0);
+		dto.setMaxlist(10);
+		boardMapper.boardListPage(dto).forEach(board->log.info(board.toString()));
+		
+	}
+	*/
+	@Test
+	public void boardListSearchPageTest() {
+		PageSearchDTO dto = new PageSearchDTO();
+		dto.setOffset(0);
+		dto.setMaxlist(10);
+		dto.setKey("김");
+		dto.setSearch("name");
+		boardMapper.boardListSearchPage(dto).forEach(board->log.info(board.toString()));
+		
 	}
 	
 }

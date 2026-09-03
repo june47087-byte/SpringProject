@@ -5,22 +5,28 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.mnu.sample.domain.BoardDTO;
+import com.mnu.sample.domain.PageSearchDTO;
 
 @Mapper
 public interface BoardMapper {
-	//1. 전체 글수 카운트
+	// 1. 전체 글수 카운트
 	public int boardCount();
-	//2. 검색 조건에 해당하는 글수
+	// 2. 검색 조건에 해당하는 글수
 	public int boardCountSearch(String search, String key);
-	//3. 전체목록 리스트
+	// 3. 전체목록 리스트
 	public List<BoardDTO> boardList();
-	//4. 검색조건에 맞는 글 리스트
+	// 3-1. 전체목록 리스트(페이지 인덱싱)
+	public List<BoardDTO> boardListPage(PageSearchDTO pageSearchDTO);
+	// 4. 검색조건에 맞는 글 리스트
 	public List<BoardDTO> boardListSearch(String search, String key);
-	//5. 글 등록
+	// 4-1. 검색조건에 맞는 글 리스트(페이지 인덱싱)
+	public List<BoardDTO> boardListSearchPage(PageSearchDTO pageSearchDTO);
+	// 5. 글 등록
 	public int boardWrite(BoardDTO dto);
-	//6. 특정 글 검색(view, modify)
+	// 6. 특정 글 검색(view, modify)
+	public void boardHits(int idx); // 조회수
+	public BoardDTO boardViewModify(int idx); // 상세 뷰
+	// 7. 수정처리
 	
-	//7. 수정처리
-	
-	//8. 삭제처리
+	// 8. 삭제처리
 }
