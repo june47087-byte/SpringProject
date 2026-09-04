@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-
-<%@ include file="/Include/topmenu.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ include file="../Include/topmenu.jsp" %>
 
 <html>
    <head>
@@ -20,7 +21,7 @@
      <td width="20%"  height="500" bgcolor="#ecf1ef" valign="top">
 
 		<!--  로그인 폼 추가 -->
-		<jsp:include page="/Include/login_form.jsp" /> 
+		<jsp:include page="../Include/login_form.jsp" /> 
 
      </td>
      <td width="80%" valign="top">
@@ -37,23 +38,25 @@
        <tr bgcolor="e3e9ff">
          <td class="title">
            <img src="/Images/img/bullet-04.gif">   
-           <font size="2" face="돋움">좋은 하루 되세요
+           <font size="2" face="돋움">${pds.subject }
            </font></td></tr>
   <tr>  
     <td class="content">
     <p align="right"><font size="2" face="돋움">  
-			홍길동 / 2007-10-11 / 2번 읽음
-    <p>언제나 즐겁고 행복한 하루가 되었으면 합니다.<br>
-		    항상 노력하는 자 만이 성공할 수 있다.<p>
-    <img src="/Images/img/disk.gif" align="middle" width="22" height="20" border="0">&nbsp;test.zip
+			${pds.name } / ${fn:substring(pds.regdate, 0, 10	)} / ${pds.readcnt }번 읽음
+    <p>${pds.contents }<p>
+    <img src="/upload/${pds.filename}" align="middle" width="22" height="20" border="0">&nbsp;<a href="/Pds/down_load?idx=${pds.idx}">${pds.filename}</a>
 	
 	</font></td></tr>
   </table>
   <p align="center">
   <font size="2">
-  <img src="/Images/img/edit-1.gif" border="0">&nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="/Images/img/del.gif" border="0">&nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="/Images/img/list-2.gif" border="0"></font></td></tr>  
+  <a href="/Pds/pds_modify?idx=${pds.idx }&page=${page}">
+  <img src="/Images/img/edit-1.gif" border="0"></a>&nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="/Pds/pds_delete?idx=${pds.idx}&page=${page}">
+  <img src="/Images/img/del.gif" border="0"></a>&nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="/Pds/pds_list?page=${page}">
+  <img src="/Images/img/list-2.gif" border="0"></a></font></td></tr>  
 </table>  
 </body>  
 </html>

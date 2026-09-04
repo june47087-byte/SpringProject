@@ -22,13 +22,13 @@
 		</choose>
 	</select>
 	<!-- 3-1. 전체목록 리스트(페이지 인덱싱) -->
-	<select id="pdsListPage" resultType="com.mnu.sample.domain.pdsDTO">
+	<select id="pdsListPage" resultType="com.mnu.sample.domain.PdsDTO">
 		select * from tbl_pds order by idx desc 
 			offset #{offset} rows fetch next #{maxlist} rows only
 	</select>
 
 	<!-- 4-1. 검색조건에 맞는 글 리스트(페이지 인덱싱) -->
-	<select id="pdsListSearchPage" resultType="com.mnu.sample.domain.pdsDTO">
+	<select id="pdsListSearchPage" resultType="com.mnu.sample.domain.PdsDTO">
 			select * from tbl_pds where 
 			<choose>
 				<when test="search=='name'">

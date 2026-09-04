@@ -5,6 +5,19 @@
 <html>
    <head><title> 자료 올리기 </title>
    </head> 
+<script>
+	function pds_send(){
+		if(!pds.name.value){
+			alert("이름을 입력하세요");
+			pds.name.focus();
+			return;
+		}
+		//파일 용량 체크
+		
+		alert("저장합니다.");
+		pds.submit();
+	}   
+</script>
 <body>
 <link rel="stylesheet" type="text/css" href="stylesheet.css">
 
@@ -21,7 +34,7 @@
      <font size="2"> - 자료올리기</font><p>
      <img src="/Images/img/bullet-03.gif"><font size="2" face="돋움" color="orange"> 잠깐</font> &nbsp;
      <img src="/Images/img/bullet-02.gif"><font size="2" face="돋움">는 필수 입력 사항입니다.</font><p>
-
+	<form name="pds" method="post" enctype="multipart/form-data" action="/Pds/pds_write">
 	  <table border="0" >
 		<tr>
          <td width="5%" align="right"><img src="/Images/img/bullet-02.gif"></td>
@@ -61,14 +74,16 @@
           <td align="right">&nbsp;</td>
           <td><font size="2">&nbsp;</font></td>
           <td align=center>
-			<img src="/Images/img/save.gif" width="56" height="18" border="0">
-			<img src="/Images/img/cancle.gif" width="56" height="18" border="0">
-
+			<img src="/Images/img/save.gif" width="56" height="18" border="0" onclick="pds_send()">
+			<img src="/Images/img/cancle.gif" width="56" height="18" border="0" onclick="history.back()">
+		
 		  </td>
         </tr>
       </table>
+	</form>	
     </td>
   </tr>
  </table>
 </body>		
 </html>
+

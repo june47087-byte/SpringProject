@@ -22,8 +22,6 @@ import jakarta.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping("Board")
 public class BoardController {
-	private static final Logger log = 
-			LoggerFactory.getLogger(IndexController.class);
 	private final BoardService boardService;
 
 	BoardController(BoardService boardService) {
@@ -111,7 +109,6 @@ public class BoardController {
 	// 위의 설명의 합치는 방식을 이요해서 get post boar_list_page를 합쳐보자 게시판 전체와 검색을 합치자
 	@RequestMapping(value="board_list", method= {RequestMethod.GET, RequestMethod.POST })
 	public String boardListPage(@RequestParam(defaultValue = "1") int page, PageSearchDTO pgDTO, Model model) { // requestParam 을 사용하면 매개변수가 달라도 합칠 수 있다. 
-		log.info("board call : board_list");
 		int nowpage = page; // now page
 		int maxlist = 10; // comment count in list
 		int totpage = 1; // total page count
@@ -168,7 +165,7 @@ public class BoardController {
 	}
 	// modify
 	@GetMapping("board_modify")
-	public String moardModify(@RequestParam(defaultValue= "1") int page, @RequestParam("idx") int idx, Model model) {
+	public String boardModify(@RequestParam(defaultValue= "1") int page, @RequestParam("idx") int idx, Model model) {
 		model.addAttribute("board", boardService.boardModify(idx));
 		return "Board/board_modify";
 	}
@@ -180,6 +177,7 @@ public class BoardController {
 		model.addAttribute("page", page);
 		return "Board/board_modify_pro";
 	}
+	// delete
 	@GetMapping("board_delete")
 	public String boardDlete(@RequestParam(defaultValue= "1") int page, @RequestParam("idx") int idx, Model model) {
 		model.addAttribute("board", boardService.boardModify(idx));

@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.mnu.sample.domain.PdsDTO;
-import com.mnu.sample.domain.BoardDTO;
 import com.mnu.sample.domain.PageSearchDTO;
 import com.mnu.sample.mapper.PdsMapper;
 
@@ -32,13 +31,13 @@ public class PdsService {
 		return PdsMapper.pdsCountSearch(search, key);
 	}
 	//3-1. 전체목록 리스트(page indexing)
-		public List<PdsDTO> pdsListPage(PageSearchDTO pageSearchDTO){
-			return PdsMapper.pdsListPage(pageSearchDTO);
-		}
+	public List<PdsDTO> pdsListPage(PageSearchDTO pageSearchDTO){
+		return PdsMapper.pdsListPage(pageSearchDTO);
+	}
 	//4. 검색조건에 맞는 글 리스트(page indexing)
-		public List<PdsDTO> pdsListSearchPage(PageSearchDTO pageSearchDTO){
-			return PdsMapper.pdsListSearchPage(pageSearchDTO);
-		}
+	public List<PdsDTO> pdsListSearchPage(PageSearchDTO pageSearchDTO){
+		return PdsMapper.pdsListSearchPage(pageSearchDTO);
+	}
 	//5. 글 등록
 	public int pdsWrite(PdsDTO dto) {
 		return PdsMapper.pdsWrite(dto);
@@ -66,9 +65,9 @@ public class PdsService {
 			PdsMapper.pdsHits(idx);
 		}
 		PdsMapper.pdsHits(idx);
-		PdsDTO bDTO = PdsMapper.pdsViewModify(idx);
-		bDTO.setContents(bDTO.getContents().replace("\n", "<br>"));
-		return bDTO;
+		PdsDTO pDTO = PdsMapper.pdsViewModify(idx);
+		pDTO.setContents(pDTO.getContents().replace("\n", "<br>"));
+		return pDTO;
 	}
 	//7. 수정처리(폼)
 	public PdsDTO pdsModify(int idx) {

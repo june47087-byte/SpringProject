@@ -14,9 +14,9 @@ public interface PdsMapper {
 	// 2. 검색 조건에 해당하는 글수
 	public int pdsCountSearch(String search, String key);
 	// 3-1. 전체목록 리스트(페이지 인덱싱)
-	public List<PdsDTO> pdsListPage(PageSearchDTO pageSearchDTO);
+	public List<PdsDTO> pdsListPage(PageSearchDTO pgDTO);
 	// 4-1. 검색조건에 맞는 글 리스트(페이지 인덱싱)
-	public List<PdsDTO> pdsListSearchPage(PageSearchDTO pageSearchDTO);
+	public List<PdsDTO> pdsListSearchPage(PageSearchDTO pgDTO);
 	// 5. 글 등록
 	public int pdsWrite(PdsDTO dto);
 	// 6. 특정 글 검색(view, modify)
