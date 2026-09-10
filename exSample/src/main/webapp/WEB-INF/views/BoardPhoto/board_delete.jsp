@@ -4,8 +4,23 @@
 <head><title>방명록 삭제</title>
  <link rel="stylesheet" type="text/css" href="/stylesheet.css">
  </head>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+$(function(){
+	$("#submit").click(function(){
+		if(!$("#pass").val()){
+			alert("비밀번호를 입력해주세요.");
+			$("#pass").focus();
+			return;
+		}
+		$("#board").submit();
+	});
+});
+</script>
  <body>
- <form method="post" >
+ <form name="board" id="board" method="post" action="/BoardPhoto/board_delete_pro">
+   <input type="hidden" name="idx" value="${board.idx}">
+   <input type="hidden" name="page" value="${page}">
    <table border="0" cellpadding="0" cellspacing="0" width="300" align="center">
      <tr>
        <td height="50">
@@ -17,9 +32,9 @@
      <tr>
        <td valign="middle" height="40">
        <font size="2" face="돋움">
-       비밀번호 <input type="password" name="pass" size="8"></font>
-       <input type="submit" value="삭제">
-       <input type="button" value="닫기"></td></tr>
+       비밀번호 <input type="password" name="pass" id="pass" size="8"></font>
+       <input type="button" id="submit" value="삭제">
+       <input type="button" value="닫기" onclick="history.back()"></td></tr>
    </table>
    </form>
  </body>

@@ -1,6 +1,5 @@
 package com.mnu.sample.mappertest;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;

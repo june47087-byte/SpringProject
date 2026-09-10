@@ -15,14 +15,13 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js"></script>
 <script>
 	$(document).ready(function() {
-		//여기 아래 부분
 		$('#summernote').summernote({
-		  height: 300,                 // 에디터 높이
-		  minHeight: null,             // 최소 높이
-		  maxHeight: null,             // 최대 높이
-		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
-		  lang: "ko-KR",					// 한글 설정
-		  placeholder: '최대 2048자까지 쓸 수 있습니다',	//placeholder 설정
+		  height: 300,
+		  minHeight: null,
+		  maxHeight: null,
+		  focus: true,
+		  lang: "ko-KR",
+		  placeholder: '최대 2048자까지 쓸 수 있습니다',
 		  callbacks: {
 		    onImageUpload: function(files) {
 		      for (var i = 0; i < files.length; i++) {
@@ -55,13 +54,25 @@
 		});
 	}
 
-	function send(){
-		alert("등록합니다");
-		board.submit();
-		
+function board_write(){
+	if(!board.name.value){
+		alert("이름이 입력되지 않았습니다.");
+		board.name.focus();
+		return;
 	}
+	if(!board.subject.value){
+		alert("제목이 입력되지 않았습니다.");
+		board.subject.focus();
+		return;
+	}
+	if(!board.pass.value){
+		alert("비밀번호가 입력되지 않았습니다.");
+		board.pass.focus();
+		return;
+	}
+	board.submit();
+}
 </script>
-
 </head>
  <body topmargin="0" leftmargin="0">
  <table border="0" width="800">
@@ -74,27 +85,28 @@
 
    <td width="80%" valign="top">&nbsp;<br>
      <img src="/Images/img/bullet-01.gif"><font size="3" face="돋움" color="blue"> <b>반갑습니다</b></font>
-     <font size="2"> - 글쓰기</font><p>
+     <font size="2"> - 글수정</font><p>
      <img src="/Images/img/bullet-03.gif"><font size="2" face="돋움" color="orange"> 잠깐</font> &nbsp;
      <img src="/Images/img/bullet-02.gif"><font size="2" face="돋움">는 필수 입력 사항입니다.</font><p>
-     <form name="board" method="post" action="/BoardPhoto/board_write">
-
+     <form name="board" method="post" action="/BoardPhoto/board_modify_pro">
+     <input type="hidden" name="idx" value="${board.idx }">
+     <input type="hidden" name="page" value="${page }">
 	  <table border="0">
        <tr>
          <td width="5%" align="right"><img src="/Images/img/bullet-02.gif"></td>
          <td width="15%"><font size="2" face="돋움">글쓴이</font></td>
          <td width="80%">
-         <input type="text" size="20" name="name"></td>
+         <input type="text" size="20" name="name" value="${board.name}" readyonly></td>
        </tr>
 	   <tr>
          <td align="right"><img src="/Images/img/bullet-02.gif"></td>
          <td><font size="2" face="돋움">제목</font></td>
-         <td><input type="text" size="60" name="subject" ></td>
+         <td><input type="text" size="60" name="subject" value="${board.subject}"></td>
        </tr>
        <tr>
          <td align="right"><img src="/Images/img/bullet-02.gif"></td>
          <td><font size="2" face="돋움">내용</font></td>
-         <td><textarea wrap="physical" rows="10" id="summernote" name="contents" cols="60"></textarea></td>
+         <td><textarea wrap="physical" rows="10" id="summernote" name="contents" cols="60">${board.contents}</textarea></td>
        </tr>
 	   <tr>
          <td align="right"><img src="/Images/img/bullet-02.gif"></td>
@@ -106,7 +118,7 @@
           <td align="right">&nbsp;</td>
           <td><font size="2">&nbsp;</font></td>
           <td>
-                     <a href="#" onclick="send(); return false;"><img src="/Images/img/save.gif" border=0></a>&nbsp;&nbsp;&nbsp;
+                     <a href="#" onclick="board_write()"><img src="/Images/img/save.gif" border=0></a>&nbsp;&nbsp;&nbsp;
                      <a href="#"><img src="/Images/img/cancle.gif" border=0></a>
           </td>
         </tr>

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mnu.sample.domain.UserDTO;
+import com.mnu.sample.service.EmailService;
 import com.mnu.sample.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,9 +27,8 @@ public class UserController {
 	//UserService 주입
 	@Autowired
 	private UserService userService;
-	UserController(UserService userService) {
-		this.userService = userService;
-	}
+	@Autowired
+	private EmailService emailservice;
 	//로그인 폼
 	@GetMapping("user_login")
 	public String userLogin(HttpSession session) {
@@ -91,6 +91,13 @@ public class UserController {
 	}
 	//보인인증(email)
 
+	@ResponseBody
+	@PostMapping("user_email")
+	public String emilSend(@RequestParam("email") String email) {
+		String tempNum = emailservice.sendEmail(email);
+		log.info("email 인증번호 : " + tempNum);
+		return tempNum;
+	}
 	
 	//회원가입처리
 	@PostMapping("user_insert")
