@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <html>
 <head>
@@ -16,6 +17,21 @@ body {
 }
 -->
 </style>
+<script type="text/javascript">
+function notice_write(){
+	if(!notice.subject.value){
+		alert("제목이 입력되지 않았습니다.");
+		notice.subject.focus();
+		return;
+	}
+	if(!notice.contents.value){
+		alert("내용이 입력되지 않았습니다.");
+		notice.contents.focus();
+		return;
+	}
+	notice.submit();
+}
+</script>
 </head>
 
 <body>
@@ -29,16 +45,22 @@ body {
 					</b></td>
 				</tr>
 			</table><br>
+			<form name="notice" method="post"
+				action="${empty notice.idx ? '/Admin/Notice/notice_write' : '/Admin/Notice/notice_modify_pro'}">
+			<c:if test="${!empty notice.idx}">
+				<input type="hidden" name="idx" value="${notice.idx}">
+			</c:if>
+			<input type="hidden" name="adid" value="${notice.adid}">
 			<table width="60%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td><table width="100%" border="0" cellpadding="6" cellspacing="1" bgcolor="DDDDDD">
 							<tr>
 								<td width="20%" align="center" bgcolor="EcECEC"><strong>제목</strong></td>
-								<td bgcolor="ffffff"><input name="subject" type="text" value=""  style="width:450; height:18; padding:2; border:1 solid slategray" size="120"></td>
+								<td bgcolor="ffffff"><input name="subject" type="text" value="${notice.subject}"  style="width:450; height:18; padding:2; border:1 solid slategray" size="120"></td>
 							</tr>
 							<tr bgcolor="EcECEC">
 								<td align="center" bgcolor="EcECEC"><strong>내용</strong></td>
-								<td bgcolor="ffffff"><textarea name="contents" cols="10" rows="10" style="width:490; height:200; padding:2; border:1 solid slategray" tabindex="2"></textarea></td>
+								<td bgcolor="ffffff"><textarea name="contents" cols="10" rows="10" style="width:490; height:200; padding:2; border:1 solid slategray" tabindex="2">${notice.contents}</textarea></td>
 							</tr>
 						</table>
 					</td>
@@ -47,9 +69,10 @@ body {
 			</table><br>
 			<table width="60%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
-					<td align=center><a href=""><b>[수정] [등록]</b></a>&nbsp; <a href=""><b>[취소]</b></a></td>
+					<td align=center><a href="#" onclick="notice_write(); return false;"><b>[${empty notice.idx ? '등록' : '수정'}]</b></a>&nbsp; <a href="/Admin/Notice/notice_list"><b>[취소]</b></a></td>
 				</tr>
 			</table>
+			</form>
 		</td>
 	</tr>
 </table>			

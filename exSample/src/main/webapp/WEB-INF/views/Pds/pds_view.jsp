@@ -40,14 +40,17 @@
            <img src="/Images/img/bullet-04.gif">   
            <font size="2" face="돋움">${pds.subject }
            </font></td></tr>
-  <tr>  
-    <td class="content">
-    <p align="right"><font size="2" face="돋움">  
-			${pds.name } / ${fn:substring(pds.regdate, 0, 10	)} / ${pds.readcnt }번 읽음
-    <p>${pds.contents }<p>
-    <img src="/upload/${pds.filename}" align="middle" width="22" height="20" border="0">&nbsp;<a href="/Pds/down_load?idx=${pds.idx}">${pds.filename}</a>
-	
-	</font></td></tr>
+		<tr>  
+			<td class="content">
+				<p align="right"><font size="2" face="돋움"> ${pds.name} / ${pds.regdate} / ${pds.readcnt}번 읽음
+				<p>${pds.contents}</p>
+			<c:if test="${!empty pds.filename}">	
+				<img src="/Images/img/disk.gif" align="middle" width="22" height="20" border="0">
+				&nbsp;<a class="list" href="/Pds/down_load?filename=${pds.filename}">${pds.filename}</a>
+	        </c:if>
+				</font>
+			</td>
+		</tr>
   </table>
   <p align="center">
   <font size="2">

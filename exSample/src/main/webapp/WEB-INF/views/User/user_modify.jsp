@@ -17,10 +17,27 @@ td   { font-family: 돋움, Verdana; font-size: 9pt; text-decoration: none; colo
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
 <script type="text/javascript">
 $(function(){
-
+	/*
+	var gubun= ${user.gubun};
+	if(gubun==1){
+		$("#smscheck").hide();
+		$("#emailcheck").hide();
+		$("#email").hide();
+	}else{
+		$("#smscheck").hide();
+		$("#emailcheck").hide();
+		$("#sms").hide();
+	}
+	}
+	*/
 	$("#smscheck").hide();
 	$("#emailcheck").hide();
-	$("#email").hide(); // 숨기기
+	//저장된 인증방법(gubun)에 맞춰 초기 화면 표시
+	if($("#mode1").is(":checked")){
+		$("#email").hide();
+	}else{
+		$("#phone").hide();
+	}
 
 	//인증 완료 여부 플래그
 	var phoneVerified = false;
@@ -162,38 +179,11 @@ $(function(){
 		}
 	});
 
-	//가입하기 버튼 클릭 시 전체 유효성 검사
-	$("#img3").click(function(){
-		var name = $("#name").val().trim();
-		var userid = $("#userid").val().trim();
+	//수정하기 버튼 클릭 시 전체 유효성 검사
+	$("#usersend").click(function(){
 		var passwd = $("#passwd").val();
 		var repasswd = $("#repasswd").val();
 		var mode = $("input[name='mode']:checked").val();
-
-		//성명
-		if(name==''){
-			alert("회원 성명을 입력하세요");
-			$("#name").focus();
-			return false;
-		}
-
-		//아이디
-		var useridPattern = /^[A-Za-z0-9]{5,16}$/;
-		if(userid==''){
-			alert("회원 ID를 입력하세요");
-			$("#userid").focus();
-			return false;
-		}
-		if(!useridPattern.test(userid)){
-			alert("아이디는 5~16자 이내의 영문이나 숫자만 가능합니다.");
-			$("#userid").focus();
-			return false;
-		}
-		if(!useridChecked){
-			alert("아이디 중복확인을 해주세요");
-			$("#userid").focus();
-			return false;
-		}
 
 		//비밀번호
 		var passwdPattern = /^[A-Za-z0-9]{6,12}$/;
@@ -217,7 +207,6 @@ $(function(){
 			$("#repasswd").focus();
 			return false;
 		}
-		
 		//인증방법별 인증여부
 		if(mode=='1'){
 			if($("#tel").val().trim()==''){
@@ -240,9 +229,13 @@ $(function(){
 				return false;
 			}
 		}
-		
 		user.submit();
 		return true;
+	});
+
+	//취소하기 버튼 클릭 시
+	$("#userscancle").click(function(){
+		history.back();
 	});
 });
 </script>
@@ -262,7 +255,7 @@ $(function(){
 	
   </td>
   <td width="80%" valign="top">&nbsp;<img src="/Images/img/title1.gif" ><br>    
-	<form name="user" method=post action="user_insert">
+	<form name="user" method=post action="user_modify">
 	<input type="hidden" id="usersms" name="usersms">
 	<input type="hidden" id="useremail" name="useremail">
 	<table border=0 cellpadding=0 cellspacing=0 width=730 valign=top>
@@ -281,7 +274,7 @@ $(function(){
 							<tr>
 								<td width=110 bgcolor=#EFF4F8>&nbsp;회원 성명<font color=red>&nbsp;*</font></td>
 								<TD BGCOLOR=WHITE>
-									<input type=text id=name name=name size=16 maxlength=20 value="" placeholder="성명은 빈칸없이 입력하세요.">
+									<input type=text id=name name=name size=16 maxlength=20 value="${user.name }" readonly>
 								</td>
 							</tr>
 							<tr>
@@ -290,7 +283,7 @@ $(function(){
 									<table cellspacing=0 cellpadding=0>
 										<tr>
 											<td align=absmiddle>
-												<input type=text id=userid name=userid size=12 maxlength=16 value="" style="width:120">
+												<input type=text id=userid name=userid size=12 maxlength=16 value="${user.userid }" style="width:120" readonly>
 											</td>
 											<td id="userID_c">
                   								[ 5~16자 이내의 영문이나 숫자만 가능합니다. ]
@@ -314,14 +307,14 @@ $(function(){
 							</tr>
 							<tr>
 								<TD BGCOLOR="#EFF4F8">&nbsp;인증 방법 선택<font color=red>&nbsp;*</font></td>
-								<TD BGCOLOR=WHITE><input type=radio id="mode1" name=mode value="1" checked>핸드폰
-									<input type=radio id="mode2" name="mode" value="2" >이메일
+								<TD BGCOLOR=WHITE><input type=radio id="mode1" name=mode value="1" ${user.gubun=='1'? 'checked': ''}>핸드폰
+									<input type=radio id="mode2" name="mode" value="2"  ${user.gubun=='2'? 'checked': ''}>이메일
 								</td>
 							</tr>
 							<tr id="phone">
 								<TD BGCOLOR="#EFF4F8">&nbsp;전화번호<font color=red>&nbsp;*</font></td>
 								<TD BGCOLOR=WHITE>
-									<input type=text id=tel name=tel size=13 maxlength=13 value="" placeholder="휴대전화번호 (-제외)">
+									<input type=text id=tel name=tel size=13 maxlength=13 value="${user.tel}" placeholder="휴대전화번호 (-제외)">
 									<input type="button" id="phoneBtn1" value="인증번호받기">
 									<font id="phone_c" size="2" color="red">&nbsp;</font>
 								</td>
@@ -376,8 +369,8 @@ $(function(){
 							</tr>
 							<tr bgcolor=#ffffff>
 								<td colspan=3 align=center>
-									<img src="/Images/img/u_bt06.gif" vspace=3 border=0 id="img3" name=img3 style="cursor:pointer;">
-									<img src="/Images/img/u_bt05.gif" border=0 hspace=10 vspace=3 id="img4" name=img4 style="cursor:pointer;">
+									<input type="button" id="usersend" value="수정하기">
+									<input type="button" id="userscancle" value="취소하기">
 								</td>
 							</tr>
 						</table> 

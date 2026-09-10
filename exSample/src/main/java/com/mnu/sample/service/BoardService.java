@@ -89,4 +89,8 @@ public class BoardService {
 	public int boardDelete(BoardDTO dto) {
 		return boardMapper.boardDelete(dto);
 	}
+	//9. idx 내림차순 최근 N건(인덱스용)
+	public List<BoardDTO> boardTopList(int count) {
+		return boardMapper.boardTopList(count);
+	}
 }

@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
-<%@ include file="/Include/topmenu.jsp" %>
+<%@ include file="../Include/topmenu.jsp" %>
 
  <html>
  <head><meta http-equiv="Content-Type" content="text/html; charset=euc-kr">
@@ -19,7 +19,7 @@
        <td width="20%"  height="500" bgcolor="#ecf1ef" valign="top">
 
 		 <!--  다음에 추가할 부분 -->
-		<jsp:include page="/Include/login_form.jsp" /> 
+		<jsp:include page="../Include/login_form.jsp" /> 
 	   </td>
        <td width="80%" valign="top">&nbsp;<br>
          <table border="0" width="90%" align="center">
@@ -33,15 +33,14 @@
          <tr bgcolor="e3e9ff">
            <td class="title">
              <img src="/Images/img/bullet-04.gif"> <font size="2" face="돋움">
-                  제목부분</font>
+                  ${notice.subject}</font>
            </td>
          </tr>
          <tr>
            <td class="content">
              <p align="right"><font size="2" face="돋움">
-              관리자 / <font size="2" face="돋움">2007-1022 / 2번 읽음</font>
-             <p>
-             내용이 들어가는 부분<p><!--contents의 내용을 <BR>태그로 처리-->
+              ${notice.adid} / <font size="2" face="돋움">${notice.regdate} / ${notice.readcnt}번 읽음</font>
+             <p>${notice.contents}<p><!--contents의 내용을 <BR>태그로 처리-->
            </td>
          </tr>
        </table>
@@ -50,11 +49,10 @@
       <p align="center">
       <font size="2">
        <!-- 목록보기 -->
-       <a href=""><img src="/Images/img/list-2.gif" border="0"></a>&nbsp;&nbsp;
+       <a href="/Notice/notice_list?page=${page}"><img src="/Images/img/list-2.gif" border="0"></a>&nbsp;&nbsp;
       </font>
     </td>
   </tr>
   </table>
   </body>
   </html>
-

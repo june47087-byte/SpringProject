@@ -3,6 +3,7 @@ package com.mnu.sample.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.mnu.sample.domain.BoardDTO;
 import com.mnu.sample.domain.PageSearchDTO;
@@ -30,4 +31,6 @@ public interface BoardMapper {
 	public int boardModifyPro(BoardDTO dto);
 	// 8. 삭제처리
 	public int boardDelete(BoardDTO dto);
+	// 9. 인덱스용 최근거 불러오기
+	public List<BoardDTO> boardTopList(@Param("count") int count);
 }

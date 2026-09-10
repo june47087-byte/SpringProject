@@ -1,13 +1,17 @@
 package com.mnu.sample.controller;
 
 import java.io.File;
-import java.net.URLEncoder;
+import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
-import org.springframework.core.io.FileSystemResource;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,8 +22,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.util.UriUtils;
 
-import com.mnu.sample.domain.BoardDTO;
 import com.mnu.sample.domain.PageSearchDTO;
 import com.mnu.sample.domain.PdsDTO;
 import com.mnu.sample.service.PdsService;
@@ -32,9 +37,12 @@ import jakarta.servlet.http.HttpServletResponse;
 public class PdsController {
 	private final PdsService pdsService;
 
+	@Value("${file.upload-dir}")
+	private String uploadDir;
+
 	PdsController(PdsService pdsService) {
 		this.pdsService = pdsService;
-	}	
+	}
 	@RequestMapping(value="pds_list", method= {RequestMethod.GET, RequestMethod.POST })
 	public String pdsList(@RequestParam(defaultValue = "1") int page, PageSearchDTO pgDTO, Model model) {
 		int nowpage = page; // now page
@@ -96,12 +104,12 @@ public class PdsController {
 		pDTO.setPass(request.getParameter("pass"));
 		MultipartFile mf = request.getFile("filename");
 		// 저장경로 설정
-		String path = request.getServletContext().getRealPath("/upload/");
+		String path = uploadDir;
 		// 파일이름 추출
 		String fileName = mf.getOriginalFilename();
 		pDTO.setFilename(fileName);
 		
-		//실제 파이 저장
+		//실제 파일 저장
 		File file = new File(path+fileName);
 		try {
 			mf.transferTo(file);
@@ -129,7 +137,7 @@ public class PdsController {
 
 		MultipartFile mf = request.getFile("filename");
 		if (mf != null && !mf.isEmpty()) {
-			String path = request.getServletContext().getRealPath("/upload/");
+			String path = uploadDir;
 			String fileName = mf.getOriginalFilename();
 			dto.setFilename(fileName);
 			File file = new File(path + fileName);
@@ -167,19 +175,29 @@ public class PdsController {
 	
 	// 다운로드
 	@GetMapping("down_load")
-	public ResponseEntity<Resource> download(@RequestParam("idx") int idx, HttpServletRequest request) {
-		PdsDTO dto = pdsService.pdsModify(idx);
-		String fileName = dto.getFilename();
-		String path = request.getServletContext().getRealPath("/upload/");
-		File file = new File(path + fileName);
-		Resource resource = new FileSystemResource(file);
-		if (!resource.exists()) {
-			return ResponseEntity.notFound().build();
-		}
+	public ResponseEntity<Resource> downloadFile(@RequestParam("filename") String filename) {
+        try {
+            // 2. 보안을 위해 상위 디렉토리 접근 차단(.normalize()) 및 경로 병합
+            Path path = Paths.get(uploadDir).resolve(filename).normalize();
+            Resource resource = new UrlResource(path.toUri());
 
-		String encodedName = URLEncoder.encode(fileName, StandardCharsets.UTF_8).replace("+", "%20");
-		return ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + encodedName + "\"")
-				.body(resource);
-	}
+            // 3. 파일 존재 및 읽기 가능 여부 체크
+            if (!resource.exists() || !resource.isReadable()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "파일을 찾을 수 없습니다: " + filename);
+            }
+
+            // 4. 한글 파일명 깨짐 방지 인코딩
+            String encodedFilename = UriUtils.encode(filename, StandardCharsets.UTF_8);
+            
+            // 5. 다운로드 창을 띄우기 위한 Content-Disposition 설정
+            String contentDisposition = "attachment; filename=\"" + encodedFilename + "\"";
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
+                    .body(resource);
+
+        } catch (MalformedURLException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "파일 경로 오류가 발생했습니다.");
+        }
+    }
 }

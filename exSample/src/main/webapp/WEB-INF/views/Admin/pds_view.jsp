@@ -1,9 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <html>
 <head>
-<title>공지사항 관리 - 관리자페이지</title>
+<title>협력업체 관리 - 관리자페이지</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <style type="text/css"> 
 <!-- 
@@ -15,6 +14,7 @@ A:active {font-family:tahoma;font-size:9pt;color:#666666;text-decoration:none;}
 A:hover {font-family:tahoma;font-size:9pt;color:#009900;text-decoration:underline;} 
 --> 
 </style> 
+
 </head>
 
 <body>
@@ -24,7 +24,7 @@ A:hover {font-family:tahoma;font-size:9pt;color:#009900;text-decoration:underlin
 		<td align="center" height="100%" valign=middle><br>
 			<table width="30%" border="1" cellspacing="0" cellpadding="3" bgcolor="#FFCC66" bordercolor="#FFFFFF" bordercolorlight="#000000">
 				<tr> 
-					<td height=40 align="center" style="font-size: 15px;"><b>공지사항 내용보기</b></a>
+					<td height=40 align="center" style="font-size: 15px;"><b>협력업체 내용보기</b></a>
 					</b></td>
 				</tr>
 			</table><br>
@@ -32,18 +32,20 @@ A:hover {font-family:tahoma;font-size:9pt;color:#009900;text-decoration:underlin
 				<tr>
 					<td><table width="100%" border="0" cellpadding="6" cellspacing="1" bgcolor="DDDDDD">
 							<tr>
-								<td align="center" bgcolor="EcECEC"><strong>제목</strong></td>
-								<td colspan=3 bgcolor="ffffff">${notice.subject}</td>
+								<td width="18%" align="center" bgcolor="EcECEC"><strong>제목</strong></td>
+								<td width="48%"bgcolor="ffffff">안녕하세요</td>
+								<td width="18%" align="center" bgcolor="EcECEC"><strong>작성자</strong></td>
+								<td align="center" bgcolor="ffffff">홍길동</td>
 							</tr>
 							<tr>
-								<td width="20%" align="center" bgcolor="EcECEC"><strong>등록일</strong></td>
-								<td width="40%" bgcolor="ffffff">${fn:substring(notice.regdate, 0, 10)}</td>
-								<td width="20%" align="center" bgcolor="EcECEC"><strong>조회수</strong></td>
-								<td align="center" bgcolor="ffffff">${notice.readcnt}</td>
+								<td align="center" bgcolor="EcECEC"><strong>등록일</strong></td>
+								<td bgcolor="ffffff">200-10-11</td>
+								<td align="center" bgcolor="EcECEC"><strong>조회수</strong></td>
+								<td align="center" bgcolor="ffffff">3</td>
 							</tr>
 							<tr bgcolor="EcECEC">
 								<td align="center" bgcolor="EcECEC"><strong>내용</strong></td>
-								<td colspan=3 bgcolor="ffffff">${notice.contents}</td>
+								<td colspan=3 bgcolor="ffffff">안녕하세요 <br>반갑습니다</td>
 							</tr>
 						</table>
 					</td>
@@ -51,7 +53,7 @@ A:hover {font-family:tahoma;font-size:9pt;color:#009900;text-decoration:underlin
 			</table><br>
 			<table width="60%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
-					<td align=center><a href="/Admin/Notice/notice_modify?idx=${notice.idx}&page=${page}"><b>[수정]</b></a>&nbsp; <a href="/Admin/Notice/notice_delete?idx=${notice.idx}&page=${page}" onclick="return confirm('삭제하시겠습니까?');"><b>[삭제]</b></a>&nbsp; <a href="/Admin/Notice/notice_list?page=${page}"><b>[목록]</b></a></td>
+					<td align=center><a href=""><b>[답변]</b></a>&nbsp; <a href=""><b>[수정]</b></a>&nbsp; <a href=""><b>[삭제]</b></a>&nbsp; <a href=""><b>[취소]</b></a></td>
 				</tr>
 			</table>
 		</td>

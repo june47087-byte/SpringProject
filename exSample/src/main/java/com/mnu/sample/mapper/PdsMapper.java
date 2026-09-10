@@ -3,6 +3,7 @@ package com.mnu.sample.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.mnu.sample.domain.PageSearchDTO;
 import com.mnu.sample.domain.PdsDTO;
@@ -26,4 +27,6 @@ public interface PdsMapper {
 	public int pdsModifyPro(PdsDTO dto);
 	// 8. 삭제처리
 	public int pdsDelete(PdsDTO dto);
+	// 9. 인덱스용 최근거 불러오기
+	public List<PdsDTO> pdsTopList(@Param("count") int count);
 }

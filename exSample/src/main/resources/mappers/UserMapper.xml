@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mnu.sample.mapper.UserMapper">
+	<!-- id 중복검사 -->
+	<select id="userIdCheck" resultType="int">
+	     select count(*) from tbl_user where userid=#{userid}
+	</select>
+	<!-- 유저정보 등록 -->
+	<insert id="userInsert">
+		insert into tbl_user(userid, name, passwd, tel, email, gubun)
+		values(#{userid}, #{name}, #{passwd}, #{tel}, #{email}, #{gubun})
+	</insert>
+	<!-- 로그인 기능 -->
+	<select id="userLogin" resultType="com.mnu.sample.domain.UserDTO">
+		select * from tbl_user where userid=#{userid} and passwd=#{passwd}
+	</select>
+	<!-- 마지막 로그인 시간 업데이트 -->
+	<update id="userLastTimeUpdate">
+		update tbl_user set last_time=sysdate where userid=#{userid}
+	</update>
+	<!-- 회원정보 수정 -->
+	<update id="userModify">
+		update tbl_user set passwd=#{passwd}, tel=#{tel}, email=#{email}, gubun=#{gubun} where userid=#{userid}
+	</update>
+	<!-- 회원정보 단건 조회 -->
+	<select id="userFind" resultType="com.mnu.sample.domain.UserDTO">
+		select * from tbl_user where userid=#{userid}
+	</select>
+</mapper>

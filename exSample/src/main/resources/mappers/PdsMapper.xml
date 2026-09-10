@@ -65,4 +65,10 @@
 	<delete id="pdsDelete">
 		delete from tbl_pds where idx = #{idx} and pass = #{pass}
 	</delete>
+
+	<!-- 9. 인덱스용 : idx 내림차순으로 상위 N건 -->
+	<select id="pdsTopList" resultType="com.mnu.sample.domain.PdsDTO">
+		select * from tbl_pds
+		order by idx desc fetch first #{count} rows only
+	</select>
 </mapper>

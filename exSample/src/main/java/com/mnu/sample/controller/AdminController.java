@@ -16,7 +16,13 @@ public class AdminController {
 	@GetMapping("admin_login")
 	public String adminLogin() {
 		log.info("Admin call : login");
-		return "AdminLogin/admin_login";
+		return "Admin/admin_login";
+	}
+	//로그인 폼
+	@GetMapping("admin_list")
+	public String adminList() {
+		log.info("Admin call : login");
+		return "Admin/admin_list";
 	}
 	
 	

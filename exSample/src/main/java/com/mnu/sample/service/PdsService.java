@@ -81,4 +81,8 @@ public class PdsService {
 	public int pdsDelete(PdsDTO dto) {
 		return PdsMapper.pdsDelete(dto);
 	}
+	//9. idx 내림차순 최근 N건(인덱스용)
+	public List<PdsDTO> pdsTopList(int count) {
+		return PdsMapper.pdsTopList(count);
+	}
 }
