@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mnu.sample.domain.UserDTO;
+import com.mnu.sample.domain.UserMyPageDTO;
 import com.mnu.sample.service.EmailService;
 import com.mnu.sample.service.UserService;
 
@@ -163,6 +164,18 @@ public class UserController {
 	
 	//비번분실시 id를 찾어서 임시비번 발송
 
-	
+	// 마이 페이지 이동
+	@GetMapping("user_mypage")
+	public String userMyPage(HttpSession session, Model model) {
+		log.info("User Call : userMyPage");
+		UserDTO user = (UserDTO)session.getAttribute("user");
+		if(user == null) {
+			return "redirect:/User/user_login"; // 미로그인시 로그인 페이지로 이동
+		}
+		UserMyPageDTO myPage = userService.userMyPage(user.getName());
+		model.addAttribute("user", user);
+		model.addAttribute("myPage", myPage);
+		return "User/user_mypage";
+	}
 	
 }

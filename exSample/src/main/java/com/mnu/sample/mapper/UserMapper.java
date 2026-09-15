@@ -3,6 +3,7 @@ package com.mnu.sample.mapper;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.mnu.sample.domain.UserDTO;
+import com.mnu.sample.domain.UserMyPageDTO;
 
 @Mapper
 public interface UserMapper {
@@ -18,4 +19,6 @@ public interface UserMapper {
 	public int userModify(UserDTO userDTO);
 	// 6. 회원정보 단건 조회
 	public UserDTO userFind(String userid);
+	// 7. 마이 페이지 조회
+	public UserMyPageDTO userMyPage(String name);
 }

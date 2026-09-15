@@ -81,7 +81,7 @@
 
 	  <table border="0">
        <tr>
-         <td width="5%" align="right"><img src="/Images/img/bullet-02.gif"></td>
+         <td width="5%" align="right"><i	mg src="/Images/img/bullet-02.gif"></td>
          <td width="15%"><font size="2" face="돋움">글쓴이</font></td>
          <td width="80%">
          <input type="text" size="20" name="name"></td>

@@ -1,0 +1,13 @@
+spring:
+  application: # 기본생성된거라 큰 의미는 없다.
+    name: exSampleThymeleaf
+
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521/xe
+    username: C##SAMPLE
+    password: 1234
+
+# mapper.xml 위치 
+mybatis:
+  mapper-locations: "classpath:/mappers/**/*.xml"

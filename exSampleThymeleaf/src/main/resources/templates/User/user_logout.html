@@ -1,0 +1,35 @@
+<!-- 메뉴 include -->
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>로그아웃 처리 </title>
+<link rel="stylesheet" type="text/css" href="/stylesheet.css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000" leftmargin=0 topmargin=0>
+
+<div th:replace="~{Include/topmenu :: topmenu}"></div>
+
+<table border="0" width="800">
+<tr>
+  <td width="20%" bgcolor="#ecf1ef" valign="top" style="padding-left:0;">
+	<!--로그인 영역 삽입-->
+	<div th:replace="~{Include/login_form :: login_form}"></div>
+  </td>
+  <td width="80%" valign="top">&nbsp;<br>
+    <table width="583" border="0" cellspacing="0" cellpadding="0" height="150" align="center">
+      <tr>
+        <td align="center">
+          <p style="line-height:20px;">로그아웃 되었습니다.<br><br>
+            <a href="/">메인으로 돌아가기</a>
+          </p>
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+
+</body>
+</html>

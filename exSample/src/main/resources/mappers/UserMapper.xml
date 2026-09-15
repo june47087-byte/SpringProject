@@ -26,4 +26,15 @@
 	<select id="userFind" resultType="com.mnu.sample.domain.UserDTO">
 		select * from tbl_user where userid=#{userid}
 	</select>
+	<!-- 회원이 총 게시물 수 조회 (name 기준 임시 집계 - userid FK 없음) -->
+	<select id="userMyPage" resultType="com.mnu.sample.domain.UserMyPageDTO">
+		select
+			(select count(*) from tbl_pds where name=#{name}) as pdssubject,
+			(select count(*) from tbl_board where name=#{name}) as boardsubject,
+			(select count(*) from tbl_boardphoto where name=#{name}) as boardphotosubject,
+			(select count(*) from tbl_pds where name=#{name})
+			 + (select count(*) from tbl_board where name=#{name})
+			 + (select count(*) from tbl_boardphoto where name=#{name}) as totsubject
+		from dual
+	</select>
 </mapper>

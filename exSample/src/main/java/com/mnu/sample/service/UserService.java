@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.mnu.sample.domain.UserDTO;
+import com.mnu.sample.domain.UserMyPageDTO;
 import com.mnu.sample.mapper.UserMapper;
 import com.mnu.sample.util.UserSHA256;
 
@@ -86,5 +87,10 @@ public class UserService {
 	// 회원정보 단건 조회
 	public UserDTO userFind(String userid) {
 		return userMapper.userFind(userid);
+	}
+
+	// 마이 페이지 조회
+	public UserMyPageDTO userMyPage(String name) {
+		return userMapper.userMyPage(name);
 	}
 }

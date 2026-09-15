@@ -32,7 +32,7 @@
      <p align="center"><font color="white" size="2"><b><a href="/User/user_insert" class="white">회원가입</a></b></font></p>
      </c:if>
 	<c:if test="${not empty user }">
-     <p align="center"><font color="white" size="2"><b><a href="/User/user_modify" class="white">정보수정</a></b></font></p>
+     <p align="center"><font color="white" size="2"><b><a href="/User/user_mypage" class="white">마이페이지</a></b></font></p>
 	</c:if>
      </td>
      <td bgcolor="#9966ff" width="10%" onmouseover="style.backgroundColor='#2772D3'" onmouseout="style.backgroundColor=''">
