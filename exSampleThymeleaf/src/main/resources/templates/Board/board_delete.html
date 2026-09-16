@@ -4,7 +4,9 @@
  <link rel="stylesheet" type="text/css" href="/stylesheet.css">
  </head>
  <body>
- <form method="post" >
+ <form method="post" action="/Board/board_delete_pro" >
+   <input type="hidden" name="idx" th:value="${board.idx}">
+   <input type="hidden" name="page" th:value="${page}">
    <table border="0" cellpadding="0" cellspacing="0" width="300" align="center">
      <tr>
        <td height="50">

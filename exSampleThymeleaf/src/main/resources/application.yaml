@@ -8,6 +8,32 @@ spring:
     username: C##SAMPLE
     password: 1234
 
-# mapper.xml 위치 
+  # Google Email 인증
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    # 본인 이메일
+    username: june47087@gmail.com
+    # 구글 계정에서 발급받은 16자리 앱 비밀번호
+    password: btemeiwarhnjpmvw
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+# mapper.xml 위치
 mybatis:
   mapper-locations: "classpath:/mappers/**/*.xml"
+
+# 파일 업로드/다운로드 경로
+file:
+  upload-dir: "C:/Users/june3/git/SpringProject/exSampleThymeleaf/src/main/resources/static/upload/"
+
+# coolsms key
+coolsms:
+  apikey: NCS8M8XW0JDB0NVT
+  apisecret: NLXPEJJUHPNJPVPUGMW3ZJ1DEW7L02H3
+  fromnumber: "01064215465"
+  url: https://api.coolsms.co.kr

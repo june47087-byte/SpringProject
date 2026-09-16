@@ -1,6 +1,6 @@
 <!-- 메뉴 include -->
 
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head><title>게시판 읽기</title>
 <link rel="stylesheet" type="text/css" href="/stylesheet.css">
 <style type="text/css">
@@ -9,11 +9,13 @@
 
 </head>
 <body bgcolor="#FFFFFF" topmargin="0" leftmargin="0">
+<div th:replace="~{Include/topmenu :: topmenu}"></div>
 <table border="0" width="800">
   <tr>
     <td width="20%" height="500" valign="top" bgcolor="#ecf1ef">
 
 	<!-- 다음에 추가할 부분 -->
+	<div th:replace="~{Include/login_form :: login_form}"></div>
 	</td>
 
 	<td width="80%" valign="top">	

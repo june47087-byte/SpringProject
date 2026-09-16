@@ -1,0 +1,98 @@
+<!-- 메뉴 include -->
+
+<html xmlns:th="http://www.thymeleaf.org">
+   <head><title>자료 수정</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheet.css">
+<script type="text/javascript">
+function pds_write(){
+	if(!pds.name.value){
+		alert("이름이 입력되지 않았습니다.");
+		pds.name.focus();
+		return;
+	}
+	if(!pds.subject.value){
+		alert("제목이 입력되지 않았습니다.");
+		pds.subject.focus();
+		return;
+	}
+	if(!pds.contents.value){
+		alert("내용이 입력되지 않았습니다.");
+		pds.contents.focus();
+		return;
+	}
+	if(!pds.pass.value){
+		alert("비밀번호가 입력되지 않았습니다.");
+		pds.pass.focus();
+		return;
+	}
+	pds.submit();
+}
+</script>
+</head>
+ <body topmargin="0" leftmargin="0">
+ <div th:replace="~{Include/topmenu :: topmenu}"></div>
+ <table border="0" width="800">
+ <tr>
+   <td width="20%" height="500" bgcolor="#ecf1ef" valign="top">
+
+   <!-- 다음에 추가할 부분 -->
+   <div th:replace="~{Include/login_form :: login_form}"></div>
+   </td>
+
+   <td width="80%" valign="top">&nbsp;<br>
+     <img src="/Images/img/bullet-01.gif"><font size="3" face="돋움" color="blue"> <b>참 좋은 자료실</b></font>
+     <font size="2"> - 자료수정</font><p></p>
+     <img src="/Images/img/bullet-03.gif"><font size="2" face="돋움" color="orange"> 잠깐</font> &nbsp;
+     <img src="/Images/img/bullet-02.gif"><font size="2" face="돋움">는 필수 입력 사항입니다.</font><p></p>
+     <form name="pds" method="post" action="/Pds/pds_modify_pro" enctype="multipart/form-data">
+     <input type="hidden" name="idx" th:value="${pds.idx}">
+     <input type="hidden" name="page" th:value="${page}">
+	  <table border="0">
+       <tr>
+         <td width="5%" align="right"><img src="/Images/img/bullet-02.gif"></td>
+         <td width="15%"><font size="2" face="돋움">글쓴이</font></td>
+         <td width="80%">
+         <input type="text" size="20" name="name" th:value="${pds.name}" readonly></td>
+       </tr>
+       <tr>
+         <td align="right">&nbsp;</td>
+         <td ><font size="2" face="돋움">메일주소</font></td>
+         <td>
+          <input type="text" size="20" name="email" th:value="${pds.email}"></td>
+       </tr>
+	   <tr>
+         <td align="right"><img src="/Images/img/bullet-02.gif"></td>
+         <td><font size="2" face="돋움">제목</font></td>
+         <td><input type="text" size="60" name="subject" th:value="${pds.subject}"></td>
+       </tr>
+       <tr>
+         <td align="right"><img src="/Images/img/bullet-02.gif"></td>
+         <td><font size="2" face="돋움">내용</font></td>
+         <td><textarea wrap="physical" rows="10" name="contents" cols="60" th:text="${pds.contents}"></textarea></td>
+       </tr>
+       <tr>
+		  <td align="right"><img src="/Images/img/bullet-02.gif"></td>
+		  <td><font size="2" face="돋움">파일첨부</font></td>
+		  <td><input type="file" name="filename" size="30"> <span th:text="${pds.filename}"></span></td>
+	   </tr>
+	   <tr>
+         <td align="right"><img src="/Images/img/bullet-02.gif"></td>
+         <td><font size="2" face="돋움">비밀번호</font></td>
+          <td><input type="password" size="10" name="pass" ><font size="2" face="돋움">*.수정과 삭제시 꼭 입력하셔야 합니다.</font></td>
+        </tr>
+        <tr></tr>
+		<tr>
+          <td align="right">&nbsp;</td>
+          <td><font size="2">&nbsp;</font></td>
+          <td>
+                     <a href="#" onclick="pds_write()"><img src="/Images/img/save.gif" border="0"></a>&nbsp;&nbsp;&nbsp;
+                     <a href="#"><img src="/Images/img/cancle.gif" border="0"></a>
+          </td>
+        </tr>
+      </table>
+      </form>
+    </td>
+  </tr>
+  </table>
+  </body>
+  </html>

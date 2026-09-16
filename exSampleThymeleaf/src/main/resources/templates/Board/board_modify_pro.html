@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>게시판 수정처리</title>
+</head>
+<body>
+	<script th:if="${row == 1}" th:inline="javascript">
+		alert("수정되었습니다.");
+		location.href="/Board/board_list?page=" + [[${page}]];
+	</script>
+	<script th:if="${row == 0}" th:inline="javascript">
+		alert("비밀번호가 맞지않습니다\n\n비밀번호를 다시 입력해주세요");
+		history.back();
+	</script>
+</body>
+</html>
