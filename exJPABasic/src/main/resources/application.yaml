@@ -1,0 +1,17 @@
+spring.application.name: exJPABasic
+#db config(oracle)
+spring:
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521/xe
+    username: C##TEST
+    password: 1234
+  jpa:
+    # 1. 오라클 방언(dialect)으로 변경 
+    database-platform: org.hibernate.dialect.OracleDialect
+    # 2. sql 출력 및 포맷 설정 (H2와 동일하게 적용 가능)
+    show-sql: true
+    properties:
+      hibernate:
+      format_sql: true
+      use_sql_commments: true

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.mnu.sample.domain.UserDTO;
 import com.mnu.sample.service.UserService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -26,14 +28,12 @@ public class UserController {
 		log.info("User Call : user_login");
 		return "/Join/user_login";
 	}
-	
 	//로그인 에러(id, pass 오류시)
 	@GetMapping("/Join/user_error")
 	public String userLoginError() {
 		log.info("User Call : user_login_error");
 		return "/Join/user_error";
 	}
-
 	//회원가입 폼
 	@GetMapping("/Join/user_insert")
 	public String userInsert() {
@@ -61,5 +61,14 @@ public class UserController {
 		return "/User/user_mypage";
 	}
 
-	
+	// 로그아웃 처리
+	@GetMapping("/Join/user_logout")
+	public String userLogout(HttpServletRequest request) {
+		log.info("User Call : user_logout");
+		HttpSession session = request.getSession();
+		if(session != null) {
+			session.invalidate();
+		}
+		return "/Join/user_logout";
+	}
 }

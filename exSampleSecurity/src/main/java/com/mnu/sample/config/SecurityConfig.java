@@ -14,17 +14,18 @@ public class SecurityConfig {
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests(auth -> auth
 				.requestMatchers("/User/**").hasAnyRole("USER")
+				.requestMatchers("/BoardPhoto/**").hasAnyRole("USER","ADMIN","MANAGER")
 				.requestMatchers("/Manager/**").hasAnyRole("MANAGER","ADMIN")
 				.requestMatchers("/Admin/**").hasAnyRole("ADMIN")
-				.anyRequest().permitAll()	
+				.anyRequest().permitAll()
 		)
 		.formLogin(login ->login
 				.loginPage("/Join/user_login")
-				.loginProcessingUrl("/")
+				.loginProcessingUrl("/Join/user_login")
 				.usernameParameter("userid")
 				.passwordParameter("passwd")
-				.failureUrl("/Join/login_error")
-				
+				.failureUrl("/Join/user_error")
+
 		);
 		
 		return http.build();
