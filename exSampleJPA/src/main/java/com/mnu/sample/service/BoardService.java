@@ -80,7 +80,7 @@ public class BoardService {
 			// 검색
 			page = boardRepository.boardListSearchPage(search, key, pageable);
 		}else {
-			// 검색 X 
+			// 검색 X
 			page = boardRepository.findAll(sortedPageable);
 		}
 		return page.map(BoardResponseDTO::new);

@@ -11,11 +11,13 @@ import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name="tbl_board")
 @NoArgsConstructor
 @Getter
+@Setter
 public class BoardEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tbl_board_seq_idx_GENERATOR")
