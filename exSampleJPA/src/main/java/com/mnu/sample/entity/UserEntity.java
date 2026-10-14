@@ -16,35 +16,34 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 @Entity
 @Table(name="tbl_user")
 @NoArgsConstructor
-@Getter
 @Setter
+@Getter
 public class UserEntity {
 	@Id
 	private String userid;
 	private String name;
 	private String passwd;
+	private String gubun;
 	private String tel;
 	private String email;
-	@CreationTimestamp /// insert 사용시 자동 입력
+	@CreationTimestamp //insert시 자동 입력
 	private LocalDateTime first_time = LocalDateTime.now();
-	@UpdateTimestamp
+	@UpdateTimestamp //업데이트 시 자동 입력
 	private LocalDateTime last_time = LocalDateTime.now();
-	private String gubun;
 	@Enumerated(EnumType.STRING)
 	private Role role;
 	
 	@Builder
-	public UserEntity(String userid, String name, String passwd, String email, String tel , String gubun) {
-		this.userid = userid;
-		this.name = name;
-		this.passwd = passwd;
-		this.email = email;
-		this.tel = tel;
-		this.gubun = gubun;
-		this.role = Role.ROLE_USER;
+	public UserEntity(String userid, String name, String passwd, String gubun, String email, String tel) {
+		this.userid=userid;
+		this.name=name;
+		this.passwd=passwd;
+		this.gubun=gubun;
+		this.tel=tel;
+		this.email=email;
+		this.role=Role.ROLE_USER;
 	}
 }

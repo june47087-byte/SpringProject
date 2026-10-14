@@ -1,8 +1,21 @@
 <!-- 메뉴 include -->
 
 <html>
-   <head><title> 자료 올리기 </title>
-   </head> 
+<head>
+<title> 자료 올리기 </title>
+<script>
+	function pds_send(){
+		if(!pds.name.value){
+			alert("이름을 입력하세요");
+			pds.name.focus();
+			return;
+		}
+		alert("저장합니다.");
+		pds.submit();
+	}
+	
+</script>
+</head> 
 <body>
 <link rel="stylesheet" type="text/css" href="stylesheet.css">
 
@@ -58,8 +71,8 @@
           <td align="right">&nbsp;</td>
           <td><font size="2">&nbsp;</font></td>
           <td align=center>
-			<img src="/Images/img/purple_save.gif" width="56" height="18" border="0">
-			<img src="/Images/img/purple_cancle.gif" width="56" height="18" border="0">
+			<img src="/Images/img/purple_save.gif" width="56" height="18" border="0" onClick="pds_send()">
+			<img src="/Images/img/purple_cancle.gif" width="56" height="18" border="0" onClick="history.back()">
 
 		  </td>
         </tr>

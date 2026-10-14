@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mnu.sample.dto.BoardRequestDTO;
 import com.mnu.sample.dto.BoardResponseDTO;
+import com.mnu.sample.exception.CustomException;
 import com.mnu.sample.service.BoardService;
 
 import lombok.RequiredArgsConstructor;
@@ -28,62 +29,68 @@ public class BoardController {
 			LoggerFactory.getLogger(BoardController.class);
 	
 	private final BoardService boardService;
-	/*
+/*	
 	// 전체(검색 X, 페이지X)
 	@GetMapping("board_list")
 	public String boardList(Model model) {
 		log.info("Board Call : board_list");
 		model.addAttribute("bList", boardService.boardList());
 		model.addAttribute("totcount", boardService.boardCount());
-		model.addAttribute("page", 1);
-
+		
 		return "/Board/board_list";
 	}
-	
+*/
+
+/*
 	// 전체(검색 X, 페이지 O)
 	@GetMapping("board_list")
 	public String boardList(Model model, @PageableDefault(size=10) Pageable pageable) {
 		log.info("Board Call : board_list");
 		model.addAttribute("bList", boardService.boardList(pageable));
 		model.addAttribute("totcount", boardService.boardCount());
-
+		
 		return "/Board/board_list";
 	}
+
 	
+	//검색
 	@PostMapping("board_list")
-	public String boardListSearch(Model model, @RequestParam("search") String search,
-			@RequestParam("key") String key, @PageableDefault(size=10) Pageable pageable) {
+	public String boardListSearch(@RequestParam("search") String search, 
+									@RequestParam("key") String key, Model model) {
 		log.info("Board Call : board_list_search");
-		model.addAttribute("bList", boardService.boardListSearch(search, key, pageable));
+		
+		model.addAttribute("bList", boardService.boardListSearch(search, key));
 		model.addAttribute("totcount", boardService.boardCountSearch(search, key));
+		
 		model.addAttribute("search", search);
 		model.addAttribute("key", key);
 		return "/Board/board_list";
 	}
-	*/
-	
+*/
 	// 검색 + 페이지 처리 + get + post
 	@GetMapping("board_list")
-	public String boardListSearchPage(@RequestParam(value="search", required=false) String search, 
+	public String boardListSearchPage(@ModelAttribute("page") int page, @RequestParam(value="search", required=false) String search, 
 										@RequestParam(value="key", required=false) String key, 
-											@PageableDefault(size=10) Pageable pageable,
-											Model model) {
+											@PageableDefault(size=10) Pageable pageable, Model model) {
+
 		Page<BoardResponseDTO> result = boardService.boardListSearchPage(search, key, pageable);
 		model.addAttribute("bList", result);
 		model.addAttribute("search", search);
 		model.addAttribute("key", key);
+		
 		return "/Board/board_list";
 	}
+	
 	//등록 폼
 	@GetMapping("board_write")
-	public String boardWrite() {
+	public String boardWrite(@ModelAttribute("page") int page) {
 		log.info("Board Call : board_write");
 		return "/Board/board_write";
 		
 	}
 	//등록처리
 	@PostMapping("board_write")
-	public String boardWritePro(BoardRequestDTO board) {
+	public String boardWritePro(@ModelAttribute("page") int page, BoardRequestDTO board) {
 		log.info("Board Call : board_write_pro");
 		int row = boardService.boardWrite(board);
 		if(row==0) {
@@ -96,18 +103,18 @@ public class BoardController {
 	
 	//리스트에서 제목 선택시 idx을 이용한 상세보기(view)
 	@GetMapping("board_view")
-	public String boardView(@RequestParam("idx") int idx, Model model) {
+	public String boardView(@RequestParam("idx") int idx, @ModelAttribute("page") int page, Model model) {
 		log.info("Board Call : board_view");
 		BoardResponseDTO board = boardService.boardView(idx);
 		model.addAttribute("board", board);
 		model.addAttribute("newLineChar", "\n");//ㄱ게시글 내용의 <br> 처리용
-		model.addAttribute("page", 1);//임시
+		//model.addAttribute("page", 1);//임시
 		return "Board/board_view";
 	}
 	
 	//삭제 폼
 	@GetMapping("board_delete")
-	public String boardDelete(@RequestParam("idx") int idx, @RequestParam("page") int page) {
+	public String boardDelete(@ModelAttribute("idx") int idx, @ModelAttribute("page") int page) {
 		log.info("Board Call : board_delete");
 		
 		return "Board/board_delete";
@@ -115,7 +122,7 @@ public class BoardController {
 	
 	//삭제처리
 	@PostMapping("board_delete")
-	public String boardDeletePro(@RequestParam("idx") int idx, @RequestParam("pass") String pass, Model model) {
+	public String boardDeletePro(@RequestParam("idx") int idx, @ModelAttribute("page") int page, @RequestParam("pass") String pass, Model model) {
 		log.info("Board Call : board_delete_pro");
 		int row = boardService.boardDelete(idx, pass);
 		model.addAttribute("row", row);
@@ -124,20 +131,26 @@ public class BoardController {
 	
 	//수정 폼
 	@GetMapping("board_modify")
-	public String boardModify(@RequestParam("idx") int idx, @RequestParam("page") int page, Model model) {
+	public String boardModify(@RequestParam("idx") int idx, @ModelAttribute("page") int page, Model model) {
 		log.info("Board Call : board_modify");
 		BoardResponseDTO board = boardService.boardModify(idx);
 		model.addAttribute("board", board);
-		model.addAttribute("page", 1);
+
 		return "Board/board_modify";
 	}
 	
 	//수정 처리
 	@PostMapping("board_modify")
-	public String boardModifyPro(@RequestParam("page") int page, BoardRequestDTO board, @RequestParam("idx") int idx, Model model) {
+	public String boardModifyPro(@RequestParam("idx") int idx, @ModelAttribute("page") int page, BoardRequestDTO board, Model model) {
 		log.info("Board Call : board_modify_pro");
-		model.addAttribute("row", boardService.boardModifyPro(idx, board));
-		model.addAttribute("page", 1);
+		
+		int result = boardService.boardModifyPro(idx, board);
+		//결과 같이 0이면 사용자 예외발생 던지기
+		if(result==0) {
+			throw new CustomException("비밀번호가 맞지않습니다.");
+		}
+		
+		model.addAttribute("row", result);//
 		return "Board/board_modify_pro";
 	}
 }

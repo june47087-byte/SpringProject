@@ -1,6 +1,6 @@
 
 <!-- 메뉴 include -->
-
+<th:block th:replace="~{Include/topmenu}"></th:block>
 <HTML>
 <HEAD>
 <TITLE>로그온</TITLE>
@@ -25,7 +25,22 @@
 		}
 		user.submit();
 	}
+	
+	
 </script>
+
+<!-- 사용자 스크립트 추가(에러 출력용) -->
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+		$(document).ready(function(){
+			var errorMessage = [[${errorMessage}]];
+			if(errorMessage != null){
+				alert(errorMessage);
+			}
+		});
+	</script>
+</th:block>
+
 </HEAD>
 <body bgcolor="#FFFFFF" text="#000000" leftmargin=0 
   topmargin=0 onLoad='document.user.userid.focus();'>
@@ -34,7 +49,7 @@
 <tr>
   <td width="20%"  bgcolor="#ecf1ef" valign="top" style="padding-left:0;">
 	<!--로그인 영역 삽입-->
-	 
+	 <th:block th:replace="~{Include/login_form}"></th:block>
   </td>
   <td width="80%" valign="top">&nbsp;<br>    
 <TABLE width="683" border="0" cellspacing="0" cellpadding="0" height="265"> 
@@ -84,7 +99,7 @@
                         <a href="javascript:void(0);" id="btnFindPw" style="text-decoration:none; color:#555; font-weight:bold;">[비밀번호찾기]</a> 
                         
                         <!-- AJAX로 불러온 UI 영역이 출력될 div -->
-                        <div id="findAccountUI" style="margin-top:15px; display:none; padding:15px; border:1px solid #7aaad5; background:#fcfcfc; width:80%; max-width:400px; margin-left:auto; margin-right:auto;">
+                        <div id="findAccountUI" style="margin-top:15px; display:none; padding:15px; border:1px solid #7aaad5; background-fcfcfc; width:80%; max-width:400px; margin-left:auto; margin-right:auto;">
                           <!-- jQuery에 의해 이곳에 form이 동적으로 삽입됩니다 -->
                         </div>
                       </td> 

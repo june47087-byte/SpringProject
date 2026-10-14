@@ -1,4 +1,5 @@
 <!-- 메뉴 include -->
+<!-- 탑 메뉴 영역 삽입-->
 <th:block th:replace="~{Include/topmenu}"></th:block>
 <html>
 <head>
@@ -11,6 +12,7 @@
      th, td {
   		padding: 5px 5px; /* 위아래 12px, 좌우 10px */
 	 }
+     
    </style>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
@@ -70,6 +72,7 @@ $(function(){
 	});
 	
 	//SMS 보인 인증(인증번호 발송)
+	//핸드폰 인증하기 버튼 클릭시
 	$("#phoneBtn1").click(function(){
 		//전화번호유효성 검사
 		if($("#tel").val()==''){
@@ -114,6 +117,7 @@ $(function(){
 	});
 	
 	//email 본인인증
+	//이메일 인증하기 버튼 클릭시
 	$("#emailBtn1").click(function(){
 		//이메일 유효성 검사 검사
 		if($("#email1").val()=='' || $("#email2").val()==''){
@@ -150,11 +154,38 @@ $(function(){
 	});
 	
 
+	// 등록 버튼 클릭시
 	// 유효성 검사후 등록하기
 	//유효성 검사
 	$("#userSend").click(function(){
-		
-		
+		if($("#name").val()==''){
+			alert("이름을 입력하세요.");
+			$("#name").focus();
+			return;
+		}
+		//ID검사
+		if($("#userid").val()==''){
+			alert("id를 입력하세요.");
+			$("#userid").focus();
+			return;
+		}
+		//Pass
+		if($("#passwd").val()==''){
+			alert("비밀번호를 입력하세요.");
+			$("#passwd").focus();
+			return;
+		}
+		if($("#repasswd").val()==''){
+			alert("비밀번호확인을 입력하세요.");
+			$("#repasswd").focus();
+			return;
+		}
+		//tel
+		if($("#tel").val()==''){
+			alert("전화번호를 입력하세요.");
+			$("#tel").focus();
+			return;
+		}
 		$("#user").submit();
 	});
 
@@ -178,7 +209,7 @@ $(function(){
 	<th:block th:replace="~{Include/login_form}"></th:block>
   </td>
   <td width="80%" valign="top">&nbsp;<img src="/Images/img/title1.gif" ><br>    
-	<form name="user" id="user" method=post action="/User/user_insert" th:object="${userRequestDTO}">
+	<form name="user" id="user" method=post action="/User/user_insert">
 	<input type="hidden" id="usersms" name="usersms"><!-- 전송된 인증번호 보관용 -->
 	<input type="hidden" id="useremail" name="useremail"><!-- 전송된 이메일 인증번호 보관용  -->
 	<input type="hidden" id="email" name="email"><!-- @로 결합된 이메일 전송용  -->
@@ -199,8 +230,7 @@ $(function(){
 							<tr>
 								<td width=110 bgcolor=#EFF4F8>&nbsp;회원 성명<font color=red>&nbsp;*</font></td>
 								<TD BGCOLOR=WHITE>
-									<input type=text id=name name=name th:field="*{name}" size=16 maxlength=20 value="" placeholder="성명은 빈칸없이 입력하세요.">
-									<font color=red th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></font>
+									<input type=text id=name name=name size=16 maxlength=20 value="" placeholder="성명은 빈칸없이 입력하세요.">
 								</td>
 							</tr>
 							<tr>
@@ -233,8 +263,8 @@ $(function(){
 							</tr>
 							<tr>
 								<TD BGCOLOR="#EFF4F8">&nbsp;인증 방법 선택<font color=red>&nbsp;*</font></td>
-								<TD BGCOLOR=WHITE><input type=radio id="mode1" name=mode value="1" checked>핸드폰
-									<input type=radio id="mode2" name="mode" value="2" >이메일
+								<TD BGCOLOR=WHITE><input type=radio id="mode1" name=gubun value="1" checked>핸드폰
+									<input type=radio id="mode2" name="gubun" value="2" >이메일
 								</td>
 							</tr>
 							<tr id="phone">

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<body>
+    <!-- 1. 기존 에러 디자인을 레이어 팝업(모달) 형태로 구성 -->
+    <div id="errorModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; z-index: 9999;">
+        <div style="background: white; padding: 25px; border-radius: 8px; width: 450px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+            <h1 style="font-size: 20px; margin-top: 0; color: #333;">서비스 처리 중 오류가 발생했습니다.</h1>
+            
+            <!-- 기존 질문자님의 빨간 테두리 디자인 유지 -->
+            <div style="color: red; border: 1px solid red; padding: 10px; margin-bottom: 20px; border-radius: 4px; background-color: #fff8f8;">
+                <p style="margin: 0;"><strong>예외 메시지:</strong> <span th:text="${errorMessage}">기본 오류 메시지</span></p>
+            </div>
+            
+            <!-- 확인 버튼 (클릭 시 전 페이지로 이동) -->
+            <button onclick="goBack()" style="width: 100%; padding: 10px; background: #e53935; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">
+                확인
+            </button>
+        </div>
+    </div>
+
+    <!-- 2. 전 페이지 이동 및 데이터 체크 스크립트 -->
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        const errorMessage = [[${errorMessage}]];
+        const errorModal = document.getElementById('errorModal');
+
+        // 에러 메시지가 없을 때는 팝업을 숨깁니다.
+        if (!errorMessage) {
+            errorModal.style.display = 'none';
+        }
+
+        // 확인 버튼 클릭 시 이전 페이지로 이동하는 함수
+        function goBack() {
+            if (document.referrer) {
+                // 이전 페이지 기록이 있다면 뒤로가기
+                history.back();
+            } else {
+                // 이전 페이지 기록이 없는 비정상 접근 시 메인 화면 등으로 이동 (필요시 경로 수정)
+                location.href = '/'; 
+            }
+        }
+        /*]]>*/
+    </script>
+</body>
+
+</head>
+<body>
+
+</body>
+</html>

@@ -1,4 +1,9 @@
 spring.application.name: exSampleJPA
+
+# 자료실(Pds) 첨부파일 업로드 경로
+file:
+  dir: C:/upload/pds/
+
 #db config(oracle)
 spring:
   datasource:
@@ -13,5 +18,20 @@ spring:
     show-sql: true
     properties:
       hibernate:
-      format_sql: true
-      use_sql_commments: true
+        format_sql: true
+        use_sql_commments: true
+
+  # Google Email 인증
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    # 본인 이메일
+    username: june47087@gmail.com
+    # 구글 계정에서 발급받은 16자리 앱 비밀번호
+    password: btemeiwarhnjpmvw
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true

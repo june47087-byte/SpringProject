@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<span th:if="${row==1}">
+		<script>
+			alert("회원가입되었습니다");
+			location.replace("/");
+		</script>
+	</span>
+	<span th:if="${row==0}">
+		<script>
+			alert("시스템 장애 발생/n잠시후 다시 가입해주세요");
+			history.back();
+		</script>
+	</span>
+	
+</body>
+</html>
